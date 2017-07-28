@@ -1,16 +1,26 @@
-let paraFlip = (str) => {
+let parenthesisReverse = (string) => {
 
-  let arr = Array.from(str);
-  let iOpen = arr.indexOf("(");
-  let iClose = arr.indexOf(")");
+  //Convert to arr, index of ( and )
+  let input = Array.from(string);
+  let openParenIndex = input.indexOf("(");
+  let closeParenIndex = input.indexOf(")");
 
-  let arrSub = arr.splice(iOpen, iClose - iOpen + 1);
+  //Pull subsection from input
+  let parenSubArr = input.splice(openParenIndex, closeParenIndex - openParenIndex + 1);
 
-  arrSub.pop();
-  arrSub.shift();
-  arrSub.reverse();
-  arr.splice(iOpen, 0, ...arrSub);
+  //Strip the parenthesis and flip
+  parenSubArr.pop();
+  parenSubArr.shift();
+  parenSubArr.reverse();
 
-  return arr.indexOf("(") !== -1 ? paraFlip(arr.join("")) : arr.join("");
+  //Reinsert the modified subsection
+  input.splice(openParenIndex, 0, ...parenSubArr);
+
+  //     //
+  let result = input.join("");
+  let parenthesisRemaining = input.indexOf("(") !== -1;
+
+  //Return the completed arr as a string, or recall the function if ('s remain
+  return parenthesisRemaining ? parenthesisReverse(result) : result;
 
 }
